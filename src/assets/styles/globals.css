@@ -1,0 +1,14 @@
+/* src/assets/styles/globals.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Styles for Modal */
+.modal {
+  @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-md w-full p-6 bg-white rounded-lg shadow-lg;
+}
+
+.overlay {
+  @apply fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-center justify-center;
+}
