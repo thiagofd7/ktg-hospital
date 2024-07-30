@@ -113,7 +113,7 @@ function MainComponent() {
           <div className="flex justify-center space-x-8">
             <div className="bg-white shadow-lg rounded-lg p-6 w-80">
               <img
-                src="https://media.discordapp.net/attachments/1194476455053246465/1266501065172320306/campinas.jpg?ex=66a6b208&is=66a56088&hm=f4446998caa8d550163a517459c1423547b59086e1d0351984e8d940c2813915&=&format=webp&width=676&height=676"
+                src="https://www.channel360.com.br/wp-content/uploads/2021/03/hospital-sirio-libanes-fachada.jpeg"
                 alt=""
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
@@ -205,64 +205,60 @@ function MainComponent() {
           <div className="flex justify-center flex-wrap gap-8">
             <div className="bg-white shadow-lg rounded-lg p-6 w-64">
               <img
-                src="https://e1a4c9d0d2f9f737c5e1.ucr.io/https://www.create.xyz/api/ai-img?prompt=Foto%2520da%2520Dra.%2520Sarah%2520Johnson"
-                alt="Foto da Dra. Sarah Johnson"
+                src="images/drAmadio.jpg"
+                alt="Foto do Dr. Amadio"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
-              <h4 className="text-xl font-bold mb-1">Dra. Thais Karla</h4>
-              <p className="text-blue-600 mb-2">Diretora médica</p>
+              <h4 className="text-xl font-bold mb-1">Dr. Gustavo Amadio</h4>
+              <p className="text-blue-600 mb-2">Clínico Geral</p>
               <p className="text-sm text-gray-600">
-                Administradora de saúde que supervisiona a gestão de centros
-                médicos.
+              Especialista em diagnosticar tudo errado, inclusive o que você realmente tem.
               </p>
             </div>
 
             <div className="bg-white shadow-lg rounded-lg p-6 w-64">
               <img
-                src="https://e1a4c9d0d2f9f737c5e1.ucr.io/https://www.create.xyz/api/ai-img?prompt=Foto%2520do%2520Dr.%2520Greg%2520House"
-                alt="Foto do Dr. Greg House"
+                src="images/drSant.png"
+                alt="Foto do Dr. Pedro Santt"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
               <h4 className="text-xl font-bold mb-1">Dr. Pedro Santt</h4>
               <p className="text-blue-600 mb-2">Cardiologia</p>
               <p className="text-sm text-gray-600">
-                Examina pacientes e avalia a condição. Explica os riscos de
-                atividades proibidas.
+              Examinando pacientes e suas desculpas para não seguirem a dieta. Especialista em diagnosticar preguiça crônica.
               </p>
             </div>
 
             <div className="bg-white shadow-lg rounded-lg p-6 w-64">
               <img
-                src="https://e1a4c9d0d2f9f737c5e1.ucr.io/https://www.create.xyz/api/ai-img?prompt=Foto%2520da%2520Dra.%2520Marta%2520Stewart"
-                alt="Foto da Dra. Marta Stewart"
-                className="w-full h-48 object-cover rounded-lg mb-4"
-              />
-              <h4 className="text-xl font-bold mb-1">Dra. Meredith Grey</h4>
-              <p className="text-blue-600 mb-2">Anestesiologista</p>
-              <p className="text-sm text-gray-600">
-                Responsável pelo manejo de pacientes cirúrgicos e seu alívio da
-                dor durante procedimentos.
-              </p>
-            </div>
-
-            <div className="bg-white shadow-lg rounded-lg p-6 w-64">
-              <img
-                src="https://e1a4c9d0d2f9f737c5e1.ucr.io/https://www.create.xyz/api/ai-img?prompt=Foto%2520do%2520Dr.%2520Marco%2520Rossi"
-                alt="Foto do Dr. Marco Rossi"
+                src="images/drBart.png"
+                alt="Foto do Dr. Luis Pingas"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
               <h4 className="text-xl font-bold mb-1">Dr. Luis Bart</h4>
+              <p className="text-blue-600 mb-2">Anestesiologista</p>
+              <p className="text-sm text-gray-600">
+              Garantindo que os pacientes durmam durante a cirurgia... e acordem apenas para descobrir que esqueceram de fazer o procedimento.
+              </p>
+            </div>
+
+            <div className="bg-white shadow-lg rounded-lg p-6 w-64">
+              <img
+                src="images/drLamarao.png"
+                alt="Foto do Dr. Lamarão"
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
+              <h4 className="text-xl font-bold mb-1">Dr. Lamarão</h4>
               <p className="text-blue-600 mb-2">Neurocirurgião</p>
               <p className="text-sm text-gray-600">
-                Realiza cirurgias no cérebro, medula espinhal e nervos
-                periféricos para remover tumores.
+              Realiza cirurgias no cérebro, medula espinhal e nervos periféricos... quando não está tentando lembrar onde deixou o bisturi.
               </p>
             </div>
           </div>
         </div>
       </main>
 
-      <footer className="bg-blue-600 text-white py-8 mt-16">
+      <footer className="bg-black text-white py-3 mt-16">
         <div className="container mx-auto px-4 text-center">
           <div className="mb-4">
             <h3 className="text-2xl font-semibold mb-2">

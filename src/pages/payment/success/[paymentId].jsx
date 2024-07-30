@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../../../components/Navbar';
-import { useRouter } from 'next/router';
-import { loadPaymentFromLocalStorage } from '../../../utils/localStorage';
-import Confetti from 'react-confetti';
-import { motion } from 'framer-motion';
-import 'animate.css/animate.min.css';
+import React, { useEffect, useState } from "react";
+import Navbar from "../../../components/Navbar";
+import { useRouter } from "next/router";
+import { loadPaymentFromLocalStorage } from "../../../utils/localStorage";
+import Confetti from "react-confetti";
+import { motion } from "framer-motion";
+import "animate.css/animate.min.css";
 
 const Success = () => {
   const [payment, setPayment] = useState(null);
-  const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
   const [animateGif, setAnimateGif] = useState(false);
   const router = useRouter();
   const { paymentId } = router.query;
 
   useEffect(() => {
-    if (!paymentId) return;
+    if (!paymentId) return router.push("/");
 
     const loadedPayment = loadPaymentFromLocalStorage();
     if (!loadedPayment || loadedPayment.paymentId !== paymentId) {
-      router.push('/');
+      router.push("/");
       return;
-    } else if (loadedPayment.status !== 'approved') {
+    } else if (loadedPayment.status !== "approved") {
       router.push(`/payment/pay/${paymentId}`);
     }
 
@@ -30,13 +33,13 @@ const Success = () => {
       setWindowSize({ width: window.innerWidth, height: window.innerHeight });
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [paymentId, router]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push('/');
+      router.push("/");
     }, 30000);
 
     return () => clearTimeout(timer);
@@ -74,10 +77,16 @@ const Success = () => {
             className="border-t-2 border-green-500 w-full mb-8"
             initial={{ width: "0%" }}
             animate={{ width: "100%" }}
-            transition={{ duration: 1.5, repeat: Infinity, repeatType: "mirror" }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "mirror",
+            }}
           ></motion.div>
 
-          <h2 className="text-4xl font-bold text-center mb-6 text-green-500">Compra Confirmada!</h2>
+          <h2 className="text-4xl font-bold text-center mb-6 text-green-500">
+            Compra Confirmada!
+          </h2>
 
           <motion.div
             className="bg-white p-10 rounded-lg shadow-lg text-center max-w-2xl mx-auto"
@@ -90,10 +99,10 @@ const Success = () => {
               initial="initial"
               animate="animate"
               variants={variants}
-              transition={{ type: 'spring', stiffness: 300 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               <motion.img
-                src="https://cdn.discordapp.com/attachments/1214236098264305735/1266978220528636006/Animation_-_1722141166011.gif?ex=66a71ceb&is=66a5cb6b&hm=6d300770c050dde44029925a84ba3e8d37148860f70c09711726c2fad1edd868&"
+                src="/images/success.gif"
                 alt="Success Animation"
                 height={120}
                 width={120}
@@ -101,7 +110,9 @@ const Success = () => {
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.5 }}
               />
-              <h3 className="text-2xl font-semibold mt-4 text-gray-700">Pagamento Aprovado</h3>
+              <h3 className="text-2xl font-semibold mt-4 text-gray-700">
+                Pagamento Aprovado
+              </h3>
             </motion.div>
 
             <div className="flex justify-around space-x-4 text-sm text-gray-700">
