@@ -8,13 +8,27 @@ import "animate.css/animate.min.css";
 
 const Success = () => {
   const [payment, setPayment] = useState(null);
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   const [animateGif, setAnimateGif] = useState(false);
   const router = useRouter();
   const { paymentId } = router.query;
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Código que usa `window` deve estar dentro dessa verificação
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+
+      const handleResize = () => {
+        setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      };
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
 
   useEffect(() => {
     if (!paymentId) return router.push("/");
@@ -26,15 +40,9 @@ const Success = () => {
     } else if (loadedPayment.status !== "approved") {
       router.push(`/payment/pay/${paymentId}`);
     }
-
+    const audio = new Audio('/audio/paymentApproved.mp3');
+    audio.play();
     setPayment(loadedPayment);
-
-    const handleResize = () => {
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, [paymentId, router]);
 
   useEffect(() => {
@@ -65,12 +73,14 @@ const Success = () => {
   return (
     <div className="min-h-screen bg-gradient-to-r from-gray-800 via-gray-900 to-black font-roboto relative">
       <Navbar />
-      <Confetti
-        width={windowSize.width}
-        height={windowSize.height}
-        numberOfPieces={300}
-        recycle={true}
-      />
+      {typeof window !== "undefined" && (
+        <Confetti
+          width={windowSize.width}
+          height={windowSize.height}
+          numberOfPieces={300}
+          recycle={true}
+        />
+      )}
       <main className="container mx-auto px-4 py-8 flex flex-col items-center">
         <div className="w-full max-w-lg">
           <motion.div

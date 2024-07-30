@@ -4,7 +4,6 @@ import PlanList from '../components/PlanList';
 import PlanForm from '../components/PlanForm';
 import { usePlan } from '../context/PlanContext';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 
 function Dashboard() {

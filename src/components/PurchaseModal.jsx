@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 //import { usePayment } from '../context/PaymentContext';
 import { savePaymentToLocalStorage } from '../utils/localStorage';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 Modal.setAppElement('#__next');
 
 const PurchaseModal = ({ isOpen, onClose, plan }) => {

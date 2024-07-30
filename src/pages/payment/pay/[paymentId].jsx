@@ -21,7 +21,7 @@ const Payment = () => {
 
   useEffect(() => {
     if (!paymentId) return;
-
+    
     const loadedPayment = loadPaymentFromLocalStorage();
     if (!loadedPayment || loadedPayment.paymentId !== paymentId) {
       toast.error('Pagamento não encontrado!');
@@ -30,6 +30,8 @@ const Payment = () => {
     } else if (loadedPayment.status === 'approved') {
       router.push('/payment/success/' + paymentId);
     }
+    const audio = new Audio('/audio/paymentCreated.mp3');
+    audio.play();
     toast.info('Pagamento gerado com sucesso!');
     setPayment(loadedPayment);
 

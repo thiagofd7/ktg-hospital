@@ -1,12 +1,15 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
     esmExternals: 'loose'
   },
-  webpack: (config) => {
-    config.externals = [...config.externals, { canvas: "canvas" }]; // required to make pdfjs work
+  webpack: (config, { isServer }) => {
+    config.externals = [...config.externals, { canvas: "canvas" }];
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        canvas: false,
+      };
+    }
     return config;
   },
 };
-
-module.exports = nextConfig;

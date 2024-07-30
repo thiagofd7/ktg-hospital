@@ -15,11 +15,10 @@ function MainComponent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Carregar planos do localStorage
     const loadedPlans = loadPlansFromLocalStorage();
     setPlans(loadedPlans);
 
-    // Carregar o plano atual do localStorage
+
     const loadedCurrentPlan = loadCurrentPlanFromLocalStorage();
     setCurrentPlan(loadedCurrentPlan);
   }, []);
@@ -212,7 +211,7 @@ function MainComponent() {
               <h4 className="text-xl font-bold mb-1">Dr. Gustavo Amadio</h4>
               <p className="text-blue-600 mb-2">Clínico Geral</p>
               <p className="text-sm text-gray-600">
-              Especialista em diagnosticar tudo errado, inclusive o que você realmente tem.
+              Mestre na arte de diagnosticar errado. Se você acha que tem uma coisa, ele garante que é outra.
               </p>
             </div>
 
@@ -238,7 +237,7 @@ function MainComponent() {
               <h4 className="text-xl font-bold mb-1">Dr. Luis Bart</h4>
               <p className="text-blue-600 mb-2">Anestesiologista</p>
               <p className="text-sm text-gray-600">
-              Garantindo que os pacientes durmam durante a cirurgia... e acordem apenas para descobrir que esqueceram de fazer o procedimento.
+              Garantindo que os pacientes durmam durante a cirurgia... e acordem apenas para descobrir que fizeram o procedimento errado.
               </p>
             </div>
 
