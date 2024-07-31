@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { useRouter } from "next/router";
-//import { usePayment } from '../context/PaymentContext';
 import { savePaymentToLocalStorage } from "../utils/localStorage";
 import { toast } from "react-toastify";
 Modal.setAppElement("#__next");
@@ -14,12 +13,22 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
     cpf: "",
   });
   const [loading, setLoading] = useState(false);
-  //const { setPixCode, setQrCodeBase64 } = usePayment();
   const router = useRouter();
+
+  const formatCpf = (value) => {
+    const digits = value.replace(/\D/g, '');
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `${digits.slice(0, 3)}.${digits.slice(3)}`;
+    if (digits.length <= 9) return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6)}`;
+    return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9, 11)}`;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: name === "cpf" ? formatCpf(value).slice(0, 14) : value,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -29,7 +38,7 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
     try {
       savePaymentToLocalStorage({
         purchaseProcess: {
-          step: 0, // Current step in the purchase process (e.g., 'cart', 'checkout', 'payment', 'completed')
+          step: 0,
         },
         formData,
         plan,
@@ -49,15 +58,15 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
       contentLabel="Purchase Modal"
-      className="modal"
-      overlayClassName="overlay"
+      className="modal mx-auto my-4 bg-white p-8 rounded-lg shadow-xl max-w-lg transition-transform transform-gpu sm:max-w-md"
+      overlayClassName="overlay fixed inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center"
     >
-      <h2 className="text-2xl font-semibold mb-4">Assinar {plan.name}</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">Assinar {plan.name}</h2>
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label
             htmlFor="firstName"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-800 mb-1"
           >
             Nome
           </label>
@@ -68,13 +77,13 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
             value={formData.firstName}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-transform transform-gpu"
           />
         </div>
         <div>
           <label
             htmlFor="lastName"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-800 mb-1"
           >
             Sobrenome
           </label>
@@ -85,13 +94,13 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
             value={formData.lastName}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-transform transform-gpu"
           />
         </div>
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-800 mb-1"
           >
             Email
           </label>
@@ -102,13 +111,13 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-transform transform-gpu"
           />
         </div>
         <div>
           <label
             htmlFor="cpf"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-800 mb-1"
           >
             CPF
           </label>
@@ -119,20 +128,21 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
             value={formData.cpf}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-transform transform-gpu"
+            placeholder="000.000.000-00"
           />
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-4">
           <button
             type="button"
             onClick={onClose}
-            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded mr-2"
+            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition-transform transform-gpu"
           >
             Cancelar
           </button>
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-transform transform-gpu"
             disabled={loading}
           >
             {loading ? "Processando..." : "Confirmar Compra"}
