@@ -55,7 +55,7 @@ function MainComponent() {
                 <div>
                   <h3 className="text-2xl font-semibold mb-2 text-blue-600">Seu plano Ativo</h3>
                   <p className="text-lg font-semibold">{currentPlan.name}</p>
-                  <p className="text-lg mb-4">R$ {currentPlan.price.toFixed(2)}/Mês</p>
+                  <p className="text-lg mb-4">R$ {currentPlan.price.toFixed(2)}/{currentPlan.type === 'Mensal' ? 'Mês' : currentPlan.type === 'Anual' ? 'Ano' : 'Semestre'}</p>
                 </div>
               </div>
             </div>
@@ -198,7 +198,7 @@ function MainComponent() {
             Nossos especialistas médicos
           </h3>
           <p className="text-center mb-8">
-            Nos temos os melhores médicos de todo mundo, eles vão te consertar em um piscar de olhos, de acordo com seu plano claro.
+            Nós temos os melhores médicos de todo mundo, eles vão te consertar em um piscar de olhos, de acordo com seu plano claro.
           </p>
 
           <div className="flex justify-center flex-wrap gap-8">

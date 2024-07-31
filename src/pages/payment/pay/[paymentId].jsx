@@ -23,6 +23,7 @@ const Payment = () => {
     if (!paymentId) return;
     
     const loadedPayment = loadPaymentFromLocalStorage();
+    console.log(loadedPayment);
     if (!loadedPayment || loadedPayment.paymentId !== paymentId) {
       toast.error('Pagamento não encontrado!');
       router.push('/');
@@ -159,7 +160,7 @@ const Payment = () => {
               </div>
               <div>
                 <h3 className="font-bold">Tipo</h3>
-                <p>Pagamento Mensal</p>
+                <p>Pagamento {payment.plan.type}</p>
               </div>
             </div>
             <div>

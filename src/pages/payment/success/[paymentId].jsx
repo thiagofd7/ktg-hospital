@@ -136,7 +136,7 @@ const Success = () => {
               </div>
               <div className="flex flex-col items-center">
                 <h3 className="font-bold">Tipo</h3>
-                <p>Pagamento Mensal</p>
+                <p>Pagamento {payment.plan.type}</p>
               </div>
             </div>
 

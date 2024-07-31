@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import Modal from 'react-modal';
-import { useRouter } from 'next/router';
+import React, { useState } from "react";
+import Modal from "react-modal";
+import { useRouter } from "next/router";
 //import { usePayment } from '../context/PaymentContext';
-import { savePaymentToLocalStorage } from '../utils/localStorage';
-import { toast } from 'react-toastify';
-Modal.setAppElement('#__next');
+import { savePaymentToLocalStorage } from "../utils/localStorage";
+import { toast } from "react-toastify";
+Modal.setAppElement("#__next");
 
 const PurchaseModal = ({ isOpen, onClose, plan }) => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    cpf: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    cpf: "",
   });
   const [loading, setLoading] = useState(false);
   //const { setPixCode, setQrCodeBase64 } = usePayment();
@@ -27,26 +27,18 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/payment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      savePaymentToLocalStorage({
+        purchaseProcess: {
+          step: 0, // Current step in the purchase process (e.g., 'cart', 'checkout', 'payment', 'completed')
         },
-        body: JSON.stringify({ ...formData, planId: plan.id, amount: plan.price }),
+        formData,
+        plan,
       });
-
-      const result = await response.json();
-      if (response.ok) {
-        result.status = 'pending';
-        savePaymentToLocalStorage({ ...result, formData, plan });
-        onClose();
-        router.push(`/payment/pay/${result.paymentId}`); 
-      } else {
-        toast.error(result.message || 'Erro ao processar pagamento');
-      }
+      router.push(`/payment/checkout`);
+      onClose();
     } catch (error) {
-      console.error('Erro:', error);
-      toast.error('Erro ao processar pagamento');
+      console.error("Erro:", error);
+      toast.error("Erro ao redirecionar a página de checkout");
     } finally {
       setLoading(false);
     }
@@ -63,7 +55,12 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
       <h2 className="text-2xl font-semibold mb-4">Assinar {plan.name}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">Nome</label>
+          <label
+            htmlFor="firstName"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Nome
+          </label>
           <input
             type="text"
             id="firstName"
@@ -75,7 +72,12 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
           />
         </div>
         <div>
-          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Sobrenome</label>
+          <label
+            htmlFor="lastName"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Sobrenome
+          </label>
           <input
             type="text"
             id="lastName"
@@ -87,7 +89,12 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Email
+          </label>
           <input
             type="email"
             id="email"
@@ -99,7 +106,12 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
           />
         </div>
         <div>
-          <label htmlFor="cpf" className="block text-sm font-medium text-gray-700">CPF</label>
+          <label
+            htmlFor="cpf"
+            className="block text-sm font-medium text-gray-700"
+          >
+            CPF
+          </label>
           <input
             type="text"
             id="cpf"
@@ -123,7 +135,7 @@ const PurchaseModal = ({ isOpen, onClose, plan }) => {
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
             disabled={loading}
           >
-            {loading ? 'Processando...' : 'Confirmar Compra'}
+            {loading ? "Processando..." : "Confirmar Compra"}
           </button>
         </div>
       </form>
