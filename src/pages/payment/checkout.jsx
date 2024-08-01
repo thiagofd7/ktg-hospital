@@ -38,7 +38,7 @@ const CheckoutPage = () => {
     const loadedPayment = loadPaymentFromLocalStorage();
     if (!loadedPayment || loadedPayment?.purchaseProcess?.step !== 0) {
       if (loadedPayment?.purchaseProcess?.step === 1) {
-        return router.push(`/payment/pay/${loadedPayment.paymentId}`);
+        //return router.push(`/payment/pay/${loadedPayment.paymentId}`);
       } else {
         toast.error("Pagamento não encontrado!");
         router.push("/");
@@ -88,6 +88,7 @@ const CheckoutPage = () => {
         payment.purchaseProcess.step = 1;
         payment.plan.price = Number(selectedPlan.price);
         payment.plan.type = selectedPlan.name;
+        payment.plan.months = selectedPlan.months;
         savePaymentToLocalStorage({
           ...result,
           ...payment,

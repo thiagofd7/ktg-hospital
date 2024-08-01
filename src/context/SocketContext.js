@@ -8,17 +8,15 @@ export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    // Conectar apenas uma vez
     if (!socket) {
-      const socketInstance = io(process.env.PROJECT_DOMAIN); // Substitua pelo URL do seu servidor WebSocket
+      const socketInstance = io(process.env.PROJECT_DOMAIN); 
       setSocket(socketInstance);
 
-      // Ouvir o evento statusUpdate
+
       socketInstance.on('statusUpdate', (data) => {
         console.log('Status update received:', data);
       });
 
-      // Limpar a conexão quando o componente for desmontado
       return () => {
         if (socketInstance) {
           socketInstance.disconnect();

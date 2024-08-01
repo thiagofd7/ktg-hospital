@@ -1,4 +1,3 @@
-// components/Navbar.js
 import React from 'react';
 import Link from 'next/link';
 import { FiSun, FiMoon } from 'react-icons/fi';
@@ -24,7 +23,7 @@ const Navbar = () => {
         />
         <p className={`ml-2 text-lg ${isDarkMode ? 'text-white' : 'text-blue-700'}`}>KTG</p>
       </div>
-      <div>
+      <div className="hidden md:flex">
         <Link href="/" className={getLinkClassName('/')}>
           Home
         </Link>
@@ -39,7 +38,7 @@ const Navbar = () => {
         >
           {isDarkMode ? <FiSun size={24} /> : <FiMoon size={24} />}
         </button>
-        <span className="mr-2">Admin</span>
+        <span className="mr-2 hidden md:inline">Admin</span>
         <img
           src="https://icones.pro/wp-content/uploads/2022/07/icones-d-administration-bleu.png"
           alt="Admin"

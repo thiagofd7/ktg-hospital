@@ -52,6 +52,7 @@ const Payment = () => {
     socketInstance.on("statusUpdate", (data) => {
       console.log("Dados recebidos do WebSocket:", data);
       if (data.status === "approved") {
+        loadedPayment.plan.exisperesAt = +Date.now() + 1000 * 60 * 60 * 24 * (loadedPayment.plan.months * 30);
         const updatedPayment = { ...loadedPayment, status: "approved" };
         savePaymentToLocalStorage(updatedPayment);
         saveCurrentPlanToLocalStorage(updatedPayment.plan);

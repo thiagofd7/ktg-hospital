@@ -1,4 +1,3 @@
-// pages/index.js
 "use client";
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
@@ -59,13 +58,15 @@ function MainComponent() {
                   <h3 className="text-2xl font-semibold mb-2 text-blue-600">Seu plano Ativo</h3>
                   <p className="text-lg font-semibold">{currentPlan.name}</p>
                   <p className="text-lg mb-4">R$ {currentPlan.price.toFixed(2)}/{currentPlan.type === 'Mensal' ? 'Mês' : currentPlan.type === 'Anual' ? 'Ano' : 'Semestre'}</p>
+                  <p className="text-lg">Renova em: {new Date(currentPlan.exisperesAt).toLocaleDateString()}</p>
                 </div>
               </div>
             </div>
           )}
+
         </div>
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold">Planos disponíveis:</h2>
+          <h2 className="text-3xl font-bold">{plans.length > 1 ? 'Planos disponíveis:' : plans.length === 1 ? 'Plano disponível:' : ''}</h2>
         </div>
         <div className="flex justify-center space-x-8">
 
@@ -75,7 +76,11 @@ function MainComponent() {
               <div key={plan.name} className={`shadow-lg rounded-lg p-6 w-64 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
 
                 <div className="flex flex-col items-center mb-4">
-                  <img src="https://icones.pro/wp-content/uploads/2021/06/symbole-sante-noir.png" alt="Descrição da Imagem" className="w-16 h-16 " />
+                  <img
+                    src={isDarkMode ? '/images/ceduceuWhite.png' : '/images/caduceuBlack.png'}
+                    alt="Caduceu"
+                    className="w-16 h-16"
+                  />
                   <h3 className="text-xl font-bold mt-2">{plan.name}</h3>
                   <p className="text-sm mt-2">{plan.coverage}</p>
                 </div>
