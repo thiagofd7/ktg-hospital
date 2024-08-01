@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Head from 'next/head';
 import '../assets/styles/globals.css'; 
 import { PlanProvider } from '../context/PlanContext';
+import { ThemeProvider } from '../context/ThemeContext'; // Importe o ThemeProvider
 import { ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
 
@@ -18,10 +19,12 @@ function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/hospital.ico" />
       </Head>
-      <PlanProvider>
-        <Component {...pageProps} />
-        <ToastContainer /> {/* Adiciona o ToastContainer */}
-      </PlanProvider>
+      <ThemeProvider> {/* Envolva a aplicação com o ThemeProvider */}
+        <PlanProvider>
+          <Component {...pageProps} />
+          <ToastContainer />
+        </PlanProvider>
+      </ThemeProvider>
     </>
   );
 }

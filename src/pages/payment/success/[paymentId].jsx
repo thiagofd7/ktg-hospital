@@ -4,9 +4,11 @@ import { useRouter } from "next/router";
 import { loadPaymentFromLocalStorage } from "../../../utils/localStorage";
 import Confetti from "react-confetti";
 import { motion } from "framer-motion";
+import { useTheme } from "../../../context/ThemeContext";
 import "animate.css/animate.min.css";
 
 const Success = () => {
+  const { isDarkMode } = useTheme();
   const [payment, setPayment] = useState(null);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   const [animateGif, setAnimateGif] = useState(false);
@@ -40,7 +42,7 @@ const Success = () => {
     } else if (loadedPayment.status !== "approved") {
       router.push(`/payment/pay/${paymentId}`);
     }
-    const audio = new Audio('/audio/paymentApproved.mp3');
+    const audio = new Audio("/audio/paymentApproved.mp3");
     audio.play();
     setPayment(loadedPayment);
   }, [paymentId, router]);
@@ -48,7 +50,7 @@ const Success = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push("/");
-    }, 30000);
+    }, 60000);
 
     return () => clearTimeout(timer);
   }, [router]);
@@ -71,7 +73,13 @@ const Success = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-800 via-gray-900 to-black font-roboto relative">
+    <div
+      className={`min-h-screen font-roboto relative ${
+        isDarkMode
+          ? "bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white"
+          : "bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 text-black"
+      }`}
+    >
       <Navbar />
       {typeof window !== "undefined" && (
         <Confetti
@@ -99,7 +107,7 @@ const Success = () => {
           </h2>
 
           <motion.div
-            className="bg-white p-10 rounded-lg shadow-lg text-center max-w-2xl mx-auto"
+            className={`${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white'} p-10 rounded-lg shadow-lg text-center max-w-2xl mx-auto`}
             initial={{ opacity: 0, y: -100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
@@ -120,12 +128,12 @@ const Success = () => {
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.5 }}
               />
-              <h3 className="text-2xl font-semibold mt-4 text-gray-700">
+              <h3 className="text-2xl font-semibold mt-4 ">
                 Pagamento Aprovado
               </h3>
             </motion.div>
 
-            <div className="flex justify-around space-x-4 text-sm text-gray-700">
+            <div className="flex justify-around space-x-4 text-sm ">
               <div className="flex flex-col items-center">
                 <h3 className="font-bold">Valor</h3>
                 <p>R$ {payment.plan.price.toFixed(2)}</p>
@@ -140,7 +148,7 @@ const Success = () => {
               </div>
             </div>
 
-            <p className="mt-6 text-lg animate__animated animate__fadeIn animate__delay-6s text-gray-600">
+            <p className="mt-6 text-lg animate__animated animate__fadeIn animate__delay-6s ">
               Se você tiver alguma dúvida, entre em contato com nosso suporte.
             </p>
           </motion.div>

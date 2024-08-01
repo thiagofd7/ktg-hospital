@@ -3,8 +3,8 @@ import Navbar from '../components/Navbar';
 import PlanList from '../components/PlanList';
 import PlanForm from '../components/PlanForm';
 import { usePlan } from '../context/PlanContext';
+import { useTheme } from '../context/ThemeContext';
 import { toast } from 'react-toastify';
-import { FiEdit, FiTrash2 } from 'react-icons/fi';
 
 function Dashboard() {
   const { plans, setPlans, editingPlan, setEditingPlan } = usePlan();
@@ -14,6 +14,7 @@ function Dashboard() {
     coverage: "",
     price: "",
   });
+  const { isDarkMode } = useTheme();
 
   const handleAddPlan = () => {
     if (!formPlan.name || !formPlan.coverage || isNaN(formPlan.price) || formPlan.price <= 0) {
@@ -62,7 +63,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 font-roboto">
+    <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'} font-roboto`}>
       <Navbar />
       <div className="container mx-auto mt-8 px-4">
         <div className="text-center mb-12">
@@ -78,7 +79,10 @@ function Dashboard() {
           </button>
         </div>
         {isAddingPlan && (
-          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+          // <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+          <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-md mb-8`}>
+          
+            
             <PlanForm
               formPlan={formPlan}
               setFormPlan={setFormPlan}
@@ -88,7 +92,7 @@ function Dashboard() {
             />
           </div>
         )}
-        <div className="bg-white p-6 rounded-lg shadow-md">
+         <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-md mb-8`}>
           <PlanList
             plans={plans}
             onEdit={handleEditPlan}

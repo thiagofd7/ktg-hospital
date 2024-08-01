@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import { loadPlansFromLocalStorage, loadCurrentPlanFromLocalStorage } from '../utils/localStorage';
 import PurchaseModal from '../components/PurchaseModal';
+import { useTheme } from '../context/ThemeContext';
 import Link from 'next/link';
 
 
@@ -13,7 +14,7 @@ function MainComponent() {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [currentPlan, setCurrentPlan] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { isDarkMode } = useTheme();
   useEffect(() => {
     const loadedPlans = loadPlansFromLocalStorage();
     setPlans(loadedPlans);
@@ -34,7 +35,8 @@ function MainComponent() {
   };
 
   return (
-    <div className="bg-white min-h-screen text-black font-roboto flex flex-col">
+    //<div className="bg-white min-h-screen text-black font-roboto flex flex-col">
+    <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'} font-roboto flex flex-col`}>
       <Navbar />
 
       <main className="container mx-auto mt-8 px-4 flex-grow">
@@ -52,7 +54,7 @@ function MainComponent() {
             <div className="bg-blue-100 p-6 rounded-lg shadow-md mb-6 flex items-center justify-between">
               <div className="flex items-center">
                 <img src="https://icones.pro/wp-content/uploads/2022/07/icones-d-administration-bleu.png" alt="Ícone do Plano Atual" className="w-16 h-16 mr-4" />
-                <div>
+                <div className='text-black'>
                   <h3 className="text-2xl font-semibold mb-2 text-blue-600">Seu plano Ativo</h3>
                   <p className="text-lg font-semibold">{currentPlan.name}</p>
                   <p className="text-lg mb-4">R$ {currentPlan.price.toFixed(2)}/{currentPlan.type === 'Mensal' ? 'Mês' : currentPlan.type === 'Anual' ? 'Ano' : 'Semestre'}</p>
@@ -69,13 +71,12 @@ function MainComponent() {
           {plans.length > 0 ? (
             plans.map(plan => (
 
-              <div className="bg-white shadow-lg rounded-lg p-6 w-56">
+              <div key={plan.name} className={`shadow-lg rounded-lg p-6 w-64 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
 
                 <div className="flex flex-col items-center mb-4">
                   <img src="https://icones.pro/wp-content/uploads/2021/06/symbole-sante-noir.png" alt="Descrição da Imagem" className="w-16 h-16 " />
                   <h3 className="text-xl font-bold mt-2">{plan.name}</h3>
-                  <p className="text-sm text-gray-600 mt-2">{plan.coverage}
-                  </p>
+                  <p className="text-sm mt-2">{plan.coverage}</p>
                 </div>
 
                 <div className="text-center">
@@ -98,19 +99,15 @@ function MainComponent() {
 
         </div>
 
-        <div className="mt-16">
-          <h2 className="text-2xl font-bold text-center mb-2">
-            REDE HOSPITALAR
-          </h2>
-          <h3 className="text-4xl font-bold text-center mb-4">
-            Ampla rede hospitalar parceira
-          </h3>
-          <p className="text-center mb-8">
-            Juntos, oferecemos o melhor serviço de acordo com seu plano!!
+        <div className="mt-16 text-center">
+          <h2 className="text-2xl font-bold mb-2">REDE HOSPITALAR</h2>
+          <h3 className="text-4xl font-bold mb-4">Ampla rede hospitalar parceira</h3>
+          <p className="mb-8">
+            Juntos, oferecemos o melhor serviço de acordo com seu plano!
           </p>
 
-          <div className="flex justify-center space-x-8">
-            <div className="bg-white shadow-lg rounded-lg p-6 w-80">
+          <div className="flex flex-wrap justify-center gap-8">
+            <div className={`shadow-lg rounded-lg p-6 w-80 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
               <img
                 src="https://www.channel360.com.br/wp-content/uploads/2021/03/hospital-sirio-libanes-fachada.jpeg"
                 alt=""
@@ -136,7 +133,7 @@ function MainComponent() {
               </div>
             </div>
 
-            <div className="bg-white shadow-lg rounded-lg p-6 w-80">
+            <div className={`shadow-lg rounded-lg p-6 w-80 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
               <img
                 src="https://e1a4c9d0d2f9f737c5e1.ucr.io/https://www.create.xyz/api/ai-img?prompt=Fachada%2520do%2520Hospital%2520Samaritano%2520Unidade%2520II"
                 alt="Fachada do Hospital Samaritano Unidade II"
@@ -162,7 +159,7 @@ function MainComponent() {
               </div>
             </div>
 
-            <div className="bg-white shadow-lg rounded-lg p-6 w-80">
+            <div className={`shadow-lg rounded-lg p-6 w-80 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
               <img
                 src="https://e1a4c9d0d2f9f737c5e1.ucr.io/https://www.create.xyz/api/ai-img?prompt=Fachada%2520do%2520Hospital%2520Santa%2520Ign%25C3%25AAs%2520Indaiatuba"
                 alt="Fachada do Hospital Santa Ignês Indaiatuba"
@@ -195,14 +192,15 @@ function MainComponent() {
             Médicos qualificados
           </h2>
           <h3 className="text-4xl font-bold text-center mb-4">
-            Nossos especialistas médicos
+            Nossos médicos especialistas
           </h3>
           <p className="text-center mb-8">
             Nós temos os melhores médicos de todo mundo, eles vão te consertar em um piscar de olhos, de acordo com seu plano claro.
           </p>
 
           <div className="flex justify-center flex-wrap gap-8">
-            <div className="bg-white shadow-lg rounded-lg p-6 w-64">
+
+            <div className={`shadow-lg rounded-lg p-6 w-64 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
               <img
                 src="images/drAmadio.jpg"
                 alt="Foto do Dr. Amadio"
@@ -210,12 +208,12 @@ function MainComponent() {
               />
               <h4 className="text-xl font-bold mb-1">Dr. Gustavo Amadio</h4>
               <p className="text-blue-600 mb-2">Clínico Geral</p>
-              <p className="text-sm text-gray-600">
-              Mestre na arte de diagnosticar errado. Se você acha que tem uma coisa, ele garante que é outra.
+              <p className="text-sm ">
+                Mestre na arte de diagnosticar errado. Se você acha que tem uma coisa, ele garante que é outra.
               </p>
             </div>
 
-            <div className="bg-white shadow-lg rounded-lg p-6 w-64">
+            <div className={`shadow-lg rounded-lg p-6 w-64 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
               <img
                 src="images/drSant.png"
                 alt="Foto do Dr. Pedro Santt"
@@ -223,12 +221,12 @@ function MainComponent() {
               />
               <h4 className="text-xl font-bold mb-1">Dr. Pedro Santt</h4>
               <p className="text-blue-600 mb-2">Cardiologia</p>
-              <p className="text-sm text-gray-600">
-              Examinando pacientes e suas desculpas para não seguirem a dieta. Especialista em diagnosticar preguiça crônica.
+              <p className="text-sm ">
+                Examinando pacientes e suas desculpas para não seguirem a dieta. Especialista em diagnosticar preguiça crônica.
               </p>
             </div>
 
-            <div className="bg-white shadow-lg rounded-lg p-6 w-64">
+            <div className={`shadow-lg rounded-lg p-6 w-64 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
               <img
                 src="images/drBart.png"
                 alt="Foto do Dr. Luis Pingas"
@@ -236,12 +234,12 @@ function MainComponent() {
               />
               <h4 className="text-xl font-bold mb-1">Dr. Luis Bart</h4>
               <p className="text-blue-600 mb-2">Anestesiologista</p>
-              <p className="text-sm text-gray-600">
-              Garantindo que os pacientes durmam durante a cirurgia... e acordem apenas para descobrir que fizeram o procedimento errado.
+              <p className="text-sm ">
+                Garantindo que os pacientes durmam durante a cirurgia... e acordem apenas para descobrir que fizeram o procedimento errado.
               </p>
             </div>
 
-            <div className="bg-white shadow-lg rounded-lg p-6 w-64">
+            <div className={`shadow-lg rounded-lg p-6 w-64 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
               <img
                 src="images/drLamarao.png"
                 alt="Foto do Dr. Lamarão"
@@ -249,8 +247,8 @@ function MainComponent() {
               />
               <h4 className="text-xl font-bold mb-1">Dr. Lamarão</h4>
               <p className="text-blue-600 mb-2">Neurocirurgião</p>
-              <p className="text-sm text-gray-600">
-              Realiza cirurgias no cérebro, medula espinhal e nervos periféricos... quando não está tentando lembrar onde deixou o bisturi.
+              <p className="text-sm ">
+                Realiza cirurgias no cérebro, medula espinhal e nervos periféricos... quando não está tentando lembrar onde deixou o bisturi.
               </p>
             </div>
           </div>
