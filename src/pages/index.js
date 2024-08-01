@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 import { loadPlansFromLocalStorage, loadCurrentPlanFromLocalStorage } from '../utils/localStorage';
 import PurchaseModal from '../components/PurchaseModal';
 import { useTheme } from '../context/ThemeContext';
-import Link from 'next/link';
+import Reviews from '../components/Reviews';
 
 
 
@@ -14,6 +14,7 @@ function MainComponent() {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [currentPlan, setCurrentPlan] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const { isDarkMode } = useTheme();
   useEffect(() => {
     const loadedPlans = loadPlansFromLocalStorage();
@@ -253,6 +254,7 @@ function MainComponent() {
             </div>
           </div>
         </div>
+        <Reviews />
       </main>
 
       <footer className="bg-black text-white py-3 mt-16">
