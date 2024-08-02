@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { useRouter } from "next/router";
-import { savePaymentToLocalStorage } from "../utils/localStorage";
+import { loadPaymentFromLocalStorage, savePaymentToLocalStorage } from "../utils/localStorage";
 import { toast } from "react-toastify";
 import { useTheme } from '../context/ThemeContext';
 
@@ -9,11 +9,16 @@ Modal.setAppElement("#__next");
 
 const PurchaseModal = ({ isOpen, onClose, plan }) => {
   const { isDarkMode } = useTheme();
+  const localStorageData = loadPaymentFromLocalStorage();
+  const formValue = localStorageData?.formData || {};
+  if (formValue) {
+    formValue.cpf = formValue?.cpf?.replace(/\D/g, '');
+  }
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    cpf: "",
+    firstName: formValue?.firstName || "",
+    lastName: formValue?.lastName || "",
+    email: formValue?.email || "",
+    cpf: formValue?.cpf || "",
   });
   const [loading, setLoading] = useState(false);
   const router = useRouter();

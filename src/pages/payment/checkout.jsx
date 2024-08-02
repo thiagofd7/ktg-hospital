@@ -38,7 +38,8 @@ const CheckoutPage = () => {
     const loadedPayment = loadPaymentFromLocalStorage();
     if (!loadedPayment || loadedPayment?.purchaseProcess?.step !== 0) {
       if (loadedPayment?.purchaseProcess?.step === 1) {
-        //return router.push(`/payment/pay/${loadedPayment.paymentId}`);
+         router.push(`/payment/pay/${loadedPayment.paymentId}`);
+         return;
       } else {
         toast.error("Pagamento não encontrado!");
         router.push("/");

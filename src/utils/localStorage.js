@@ -26,3 +26,18 @@ export const loadCurrentPlanFromLocalStorage = () => {
   const plan = localStorage.getItem('currentPlan');
   return plan ? JSON.parse(plan) : null;
 };
+
+export const saveThemeToLocalStorage = (isDarkMode) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('theme', JSON.stringify(isDarkMode));
+  }
+};
+
+export const loadThemeFromLocalStorage = () => {
+  if (typeof window !== 'undefined') {
+    const theme = localStorage.getItem('theme');
+    return theme ? JSON.parse(theme) : null;
+  }
+  return null;
+};
+

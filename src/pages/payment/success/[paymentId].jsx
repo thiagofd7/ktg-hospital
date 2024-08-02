@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/Navbar";
 import { useRouter } from "next/router";
 import { loadPaymentFromLocalStorage } from "../../../utils/localStorage";
-import Confetti from "react-confetti";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useTheme } from "../../../context/ThemeContext";
 import "animate.css/animate.min.css";
+
+// Carrega o componente dinamicamente para evitar problemas de renderização no lado do servidor
+const Fireworks = dynamic(
+  () => import("@fireworks-js/react").then((mod) => mod.Fireworks),
+  { ssr: false }
+);
 
 const Success = () => {
   const { isDarkMode } = useTheme();
@@ -17,7 +23,6 @@ const Success = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Código que usa `window` deve estar dentro dessa verificação
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
@@ -33,7 +38,10 @@ const Success = () => {
   }, []);
 
   useEffect(() => {
-    if (!paymentId) return router.push("/");
+    if (!paymentId) {
+      router.push("/");
+      return;
+    }
 
     const loadedPayment = loadPaymentFromLocalStorage();
     if (!loadedPayment || loadedPayment.paymentId !== paymentId) {
@@ -41,7 +49,9 @@ const Success = () => {
       return;
     } else if (loadedPayment.status !== "approved") {
       router.push(`/payment/pay/${paymentId}`);
+      return;
     }
+
     const audio = new Audio("/audio/paymentApproved.mp3");
     audio.play();
     setPayment(loadedPayment);
@@ -82,11 +92,17 @@ const Success = () => {
     >
       <Navbar />
       {typeof window !== "undefined" && (
-        <Confetti
-          width={windowSize.width}
-          height={windowSize.height}
-          numberOfPieces={300}
-          recycle={true}
+        <Fireworks
+          options={{ speed: 3 }}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 1,  // Muda o z-index para que fique atrás de outros elementos
+            pointerEvents: "none",  
+          }}
         />
       )}
       <main className="container mx-auto px-4 py-8 flex flex-col items-center">
@@ -107,7 +123,9 @@ const Success = () => {
           </h2>
 
           <motion.div
-            className={`${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white'} p-10 rounded-lg shadow-lg text-center max-w-2xl mx-auto`}
+            className={`${
+              isDarkMode ? "bg-gray-800 text-white" : "bg-white"
+            } p-10 rounded-lg shadow-lg text-center max-w-2xl mx-auto`}
             initial={{ opacity: 0, y: -100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}

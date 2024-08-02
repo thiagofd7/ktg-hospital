@@ -62,26 +62,26 @@ const Reviews = () => {
     const startInterval = () => {
       intervalRef.current = setInterval(() => {
         setCurrentSlide(prevSlide => (prevSlide + 1) % testimonials.length);
-      }, 20000);
+      }, 8000);
     };
 
     startInterval();
 
-    return () => clearInterval(intervalRef.current); // Clear interval on unmount
+    return () => clearInterval(intervalRef.current); 
   }, []);
 
   const handleSlideChange = (index) => {
     setCurrentSlide(index);
-    clearInterval(intervalRef.current); // Clear the previous interval
+    clearInterval(intervalRef.current); 
     intervalRef.current = setInterval(() => {
       setCurrentSlide(prevSlide => (prevSlide + 1) % testimonials.length);
-    }, 20000); // Restart the interval
+    }, 8000);
   };
 
   return (
     <div className="p-8 font-roboto">
       <div className="text-center mb-8">
-        <h2 className="text-4xl font-bold mt-2 text-[#014E56]">Reviews</h2>
+        <h2 className="text-4xl font-bold mt-2 text-[#014E56]">Avaliações</h2>
       </div>
 
       <div className="relative overflow-hidden">
@@ -95,7 +95,7 @@ const Reviews = () => {
                 {slideTestimonials.map((testimonial, index) => (
                   <div
                     key={index}
-                    className={`w-full lg:w-[30%] mb-6 lg:mb-0 mx-2 ${isDarkMode ? 'bg-[#181616] text-white' : 'bg-white text-black'
+                    className={`w-full lg:w-[30%] mb-6 lg:mb-0 mx-2 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'
                       } p-6 rounded-lg shadow-lg`}
                   >
                     <div className="flex items-center mb-4">
